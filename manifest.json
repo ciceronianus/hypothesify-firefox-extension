@@ -1,0 +1,21 @@
+{
+	"manifest_version": 2,
+	"name": "Hypothesify",
+	"version": "0.0.1",
+	
+	"description": "Opens as hypothes.is", 
+	"icons": {
+		"48": "icons/icon.svg"
+	},
+	
+	"permissions": [
+		"<all_urls>",
+		"tabs"
+	],
+	
+	"browser_action": {
+		"default_icon": "icons/icon.svg",
+		"default_title": "Hypothesify",
+		"default_popup": "popup/hypothesify.html"
+	}
+}

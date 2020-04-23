@@ -1,0 +1,61 @@
+html, body {
+  width: 300px;
+}
+
+
+
+.hidden {
+  display: none;
+}
+
+.btn {
+  background: rgb(236, 111, 89);
+  border-width: 1px;
+  border-style: solid;
+  border-color: darkred;
+  color: white; 
+
+
+}
+.btn:hover{
+  background: rgb(230, 171, 161);
+
+}
+
+ul {
+margin: 0px;
+padding: 0px;
+
+}
+
+li {
+margin: 0px;
+padding: 0px;
+
+}
+
+
+
+.urlAdresseText {
+  border-width: 1px;
+  border-style: solid;
+  width: 100%;
+  
+
+}
+
+.hypothesis:hover {
+  background-color: #CFF2F2;
+}
+
+.hypothesis {
+  background-color: #E5F2F2;
+}
+
+.reset {
+  background-color: #FBFBC9;
+}
+
+.reset:hover {
+  background-color: #EAEA9D;
+}
