@@ -1,0 +1,1 @@
+# hypothes.is-firefox-extension
