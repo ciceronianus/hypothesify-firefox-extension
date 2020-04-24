@@ -164,4 +164,4 @@ document.getElementById("urlAddresse").addEventListener("click", copyTextUsingAP
 document.getElementById("copyButton").addEventListener("click", copyTextUsingAPI);
 
 
-
+browser.browserAction.setTitle("5");
