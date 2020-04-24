@@ -1,20 +1,38 @@
 html, body {
   width: 300px;
+  font-family: "Arial", Gadget, sans-serif;
+font-size: 15px;
+
+
+color: #FF0000;
+font-weight: normal;
+text-decoration: none;
+font-style: normal;
+font-variant: normal;
+text-transform: none;
+
 }
 
+.popup-content{
+margin-left: 6px;
 
+
+}
 
 .hidden {
   display: none;
 }
 
 .btn {
-  background: rgb(236, 111, 89);
-  border-width: 1px;
+  background: #BD1C2B;
+  border-left-width: 0px;
+  border-right-width: 0px;
+  border-bottom-width: 1px;
+  border-top-width: 0px;
   border-style: solid;
-  border-color: darkred;
+  border-color: white;
   color: white; 
-
+  padding: 5px;
 
 }
 .btn:hover{
@@ -36,17 +54,7 @@ padding: 0px;
 
 .urlAddresseLabel{
 
-font-family: "Arial Black", Gadget, sans-serif;
-font-size: 15px;
-text-align: center;
-letter-spacing: 2px;
-word-spacing: 2px;
-color: #FF0000;
-font-weight: normal;
-text-decoration: none;
-font-style: normal;
-font-variant: normal;
-text-transform: none;
+
 
 }
 
@@ -58,21 +66,7 @@ text-transform: none;
 
 }
 
-.hypothesis:hover {
-  background-color: #CFF2F2;
-}
 
-.hypothesis {
-  background-color: #E5F2F2;
-}
-
-.reset {
-  background-color: #FBFBC9;
-}
-
-.reset:hover {
-  background-color: #EAEA9D;
-}
 
 form {
   /* This bit sets up the horizontal layout */
@@ -101,7 +95,7 @@ input:focus {
 }
 
 input:hover {
-  background-color: #FBFBC9;
+  background-color: rgb(255, 231, 228);
 }
 
 button {
@@ -116,4 +110,19 @@ button:hover {
   border:0px solid blue;
   background-color:  rgb(230, 171, 161);
   color:white;
+}
+
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
 }

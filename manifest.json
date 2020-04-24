@@ -11,8 +11,8 @@
 	"permissions": [
 		"<all_urls>",
 		"tabs",
-		"clipboardWrite",
-		"clipboardRead"
+		"clipboardRead",
+		"clipboardWrite"
 	],
 	
 	"browser_action": {
