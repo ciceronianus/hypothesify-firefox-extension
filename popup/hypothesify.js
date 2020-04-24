@@ -8,38 +8,11 @@ function onError(error) {
 }
 
 
-
-// verbose variant
 function CurrentTabUrl(tabs) {
   let tab = tabs[0];
   let currentUrl = tab.url;
-  return currentUrl;
-  // let tab = tabs[0]; // Safe to assume there will only be one result
-  // let activeUrl = tab.url;
-  // let hypothesisUrl = "https://via.hypothes.is/";
-  // let newUrl = hypothesisUrl + activeUrl;
-  
-  // console.log(tabs[0].id);
-
-  // var updating = browser.tabs.update({url: "https://via.hypothes.is/" +  tab.url});
-  // updating.then(onUpdated, onError);
-
-  // var creating = browser.tabs.create({
-  //   url: newUrl
-  // });
-  // console.log(tab.url);
+  return currentUrl;  
 }
-
-// function CurrentTabUrl(){
-//   let currentUrlOfTab = browser.tabs.query({currentWindow: true, active: true}).then(tabs[0].url, console.error);
-//   return currentUrlOfTab;
-// }
-
-/**
-* Listen for clicks on the buttons, and send the appropriate message to
-* the content script in the page.
-*/
-
 
 
 function openNewHypothesis(tabs) {
@@ -58,6 +31,7 @@ function hypothesify (){
   // browser.tabs.query({currentWindow: true, active: true}).then(logTabs, console.error);
 }
 
+
 function showIframeResults(tabs) {
   let tab = tabs[0];
   let currentUrl = tab.url;
@@ -68,6 +42,15 @@ function showIframeResults(tabs) {
 
   }
 
+/*show Hiccup */
+function showIframe (){
+
+  browser.tabs.query({currentWindow: true, active: true}).then(showIframeResults, console.error);
+  
+  // browser.tabs.query({currentWindow: true, active: true}).then(logTabs, console.error);
+}
+
+
   function showHiccupResults(tabs) {
     let tab = tabs[0];
     let currentUrl = tab.url;
@@ -76,15 +59,9 @@ function showIframeResults(tabs) {
     document.getElementById("urlAddresse").value=  urlAddresseValue;
       
   
-    }
+  }
   
 
-  function showIframe (){
-
-    browser.tabs.query({currentWindow: true, active: true}).then(showIframeResults, console.error);
-    
-    // browser.tabs.query({currentWindow: true, active: true}).then(logTabs, console.error);
-  }
 
   function showHiccup(){
 
@@ -93,9 +70,28 @@ function showIframeResults(tabs) {
     // browser.tabs.query({currentWindow: true, active: true}).then(logTabs, console.error);
   }
 
+
+function copyTextUsingAPI(){
+  var copyText = document.getElementById("urlAddresse");
+   /* Select the text field */
+   copyText.select();
+   copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+  /* Copy the text inside the text field */
+  
+  navigator.clipboard.write("bla").then(function() {
+    /* clipboard successfully set */
+  }, function() {
+    /* clipboard write failed */
+  });
+
+}
+
+
 document.getElementById("btn-opn").addEventListener("click", hypothesify);
 
 document.getElementById("btn-iframe").addEventListener("click", showIframe);
 
 document.getElementById("btn-hiccup").addEventListener("click", showHiccup);
 
+// document.getElementById("urlAddresse").addEventListener("click", copyTextUsingAPI);
+// document.getElementById("copyButton").addEventListener("click", copyTextUsingAPI);

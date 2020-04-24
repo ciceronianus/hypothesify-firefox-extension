@@ -1,13 +1,7 @@
-<!DOCTYPE html>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
 
-<html>
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="hypothesify.css"/>
-  </head>
-
-<body>
-  <svg
+<svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -98,26 +92,3 @@
          y="-15.123305">h:</tspan></text>
   </g>
 </svg>
-
-  <div id="popup-content">
-    <ul>
-    <li class="btn" id="btn-opn">Open in Hypothes.is</li> 
-    <li class="btn" id="btn-iframe">Create iframe</li> 
-    <li class="btn" id="btn-hiccup">Create :hiccup [:iframe]</li> 
-  </ul>
-  <form>
-  
-    <input type="text" id="urlAddresse" name="urlAddresse" class="urlAdresseText" value="URL" readonly/>
-    <button id="copyButton">copy</button>
-  </form>
-  </div>
-
-
-  <div id="error-content" class="hidden">
-    <p>Can't hypothesify this web page.</p><p>Try a different page.</p>
-  </div>
-  <script src="hypothesify.js"></script>
-
-</body>
-
-</html>

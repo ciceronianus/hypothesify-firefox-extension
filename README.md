@@ -1,1 +1,3 @@
-# hypothes.is-firefox-extension
+# Alpha version of a Firefox extension
+## Functions:
++

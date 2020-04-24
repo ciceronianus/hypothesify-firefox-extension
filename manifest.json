@@ -5,16 +5,18 @@
 	
 	"description": "Opens as hypothes.is", 
 	"icons": {
-		"48": "icons/icon.svg"
+		"48": "icons/icon_new.svg"
 	},
 	
 	"permissions": [
 		"<all_urls>",
-		"tabs"
+		"tabs",
+		"clipboardWrite",
+		"clipboardRead"
 	],
 	
 	"browser_action": {
-		"default_icon": "icons/icon.svg",
+		"default_icon": "icons/icon_new.svg",
 		"default_title": "Hypothesify",
 		"default_popup": "popup/hypothesify.html"
 	}

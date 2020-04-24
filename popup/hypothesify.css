@@ -34,10 +34,24 @@ padding: 0px;
 
 }
 
+.urlAddresseLabel{
 
+font-family: "Arial Black", Gadget, sans-serif;
+font-size: 15px;
+text-align: center;
+letter-spacing: 2px;
+word-spacing: 2px;
+color: #FF0000;
+font-weight: normal;
+text-decoration: none;
+font-style: normal;
+font-variant: normal;
+text-transform: none;
+
+}
 
 .urlAdresseText {
-  border-width: 1px;
+  border-width: 0px;
   border-style: solid;
   width: 100%;
   
@@ -58,4 +72,48 @@ padding: 0px;
 
 .reset:hover {
   background-color: #EAEA9D;
+}
+
+form {
+  /* This bit sets up the horizontal layout */
+  display:flex;
+  flex-direction:row;
+  
+  /* This bit draws the box around it */
+  border:1px solid grey;
+
+  /* I've used padding so you can see the edges of the elements. */
+  padding:2px;
+}
+
+input {
+  /* Tell the input to use all the available space */
+  flex-grow:2;
+  /* And hide the input's outline, so the form looks like the outline */
+  border:none;
+  border-width: 0px;
+  color: grey;
+}
+
+input:focus {
+  /* removing the input focus blue box. Put this on the form if you like. */
+  outline: none;
+}
+
+input:hover {
+  background-color: #FBFBC9;
+}
+
+button {
+  /* Just a little styling to make it pretty */
+  border:0px solid blue;
+  background-color:  rgb(236, 111, 89);
+  color:white;
+}
+
+button:hover {
+  /* Just a little styling to make it pretty */
+  border:0px solid blue;
+  background-color:  rgb(230, 171, 161);
+  color:white;
 }
