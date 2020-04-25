@@ -24,18 +24,28 @@ function writeBadge(){
   });
 }
 
-function handleMessage(request, sender, sendResponse) {
-  console.log("Message from the content script: " +
-    request.greeting);
-  sendResponse({response: "Response from background script"});
-}
 
-// background-script.js
 
-function handleMessage(request, sender, sendResponse) {
-  console.log("Message from the content script: " +
-    request.greeting);
-  sendResponse({response: "Response from background script"});
+// function handleMessage(request, sender, sendResponse) {
+//   console.log("Message from the content script: " +
+//     request.greeting);
+//   sendResponse({response: "Response from background script"});
+// }
+
+// // background-script.js
+
+// function handleMessage(request, sender, sendResponse) {
+//   console.log("Message from the content script: " +
+//     request.greeting);
+//   sendResponse({response: "Response from background script"});
+// }
+
+// browser.runtime.onMessage.addListener(handleMessage);
+
+
+function handleActivated(activeInfo) {
+  console.log("Tab " + activeInfo.tabId +
+              " was activated");
 }
 
 browser.runtime.onMessage.addListener(handleMessage);

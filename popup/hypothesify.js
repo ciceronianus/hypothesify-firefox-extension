@@ -1,16 +1,33 @@
-/*main script*/
+/*STRUCTURE: 
+!!! Important note: Since I am beginner, its structure is far from great. 
 
-/* remove surplus "via.hypothes.is" */
-function removeHypothesisUrl(url){
-  let currentUrl = url;
-  let hypothesisUrl = "https://via.hypothes.is/";
-  let finalUrl = currentUrl.replace(hypothesisUrl,"");
+There are, basically, 3 PARTS:
+PART 1 - core functions fulfilling the following core actions:
+- opening/closing the webpage in via.hypothes.is
+- creating <iframe>  
+- creating <a href> 
+- creating Markdown code
+- creating :hiccup code (for Roam)  
 
-  return finalUrl;
+Each of the actions is divided into two functions (unfortunately):
+- First one gets the url of the current tab
+- The second does the action. 
 
-}
+I know that this is not great. I will, hopefully, simplify it in future. 
+
+PART 2 consists of additional functions:
+- removeHypothesisUrl()
+- selectAllText() - if the user clicks on the URL field in the popup, it selects all the text
 
 
+PART 3 - non-functions - adding corresponding elements 
+
+*/
+
+/*PART 1 - core functions */
+
+/* Opening the webpage in via.hypothes.is */
+/* dealing with updates and erros */
 function onUpdated(tab) {
   console.log(`Updated tab: ${tab.id}`);
 }
@@ -19,15 +36,8 @@ function onError(error) {
   console.log(`Error: ${error}`);
 }
 
-
-function CurrentTabUrl(tabs) {
-  let tab = tabs[0];
-  let currentUrl = tab.url;
-  return currentUrl;  
-}
-
-
-function openNewHypothesis(tabs) {
+/*the code itself*/
+function openInHypothesisResults(tabs) {
   
 
   let tab = tabs[0];
@@ -35,7 +45,7 @@ function openNewHypothesis(tabs) {
   let hypothesisUrl = "https://via.hypothes.is/";
   let finalUrl;
   
-
+  /* If the webpage is already opened in hypothes.is, then remove the corresponding URL */
   if (currentUrl.includes(hypothesisUrl) == true) {
      finalUrl = currentUrl.replace(hypothesisUrl,"");
      
@@ -50,23 +60,16 @@ function openNewHypothesis(tabs) {
   updating.then(onUpdated, onError);  
 
   }
+  
+function openInHypothesis (){
 
-function hypothesify (){
-
-  browser.tabs.query({currentWindow: true, active: true}).then(openNewHypothesis, console.error);
+  browser.tabs.query({currentWindow: true, active: true}).then(openInHypothesisResults, console.error);
   
   // browser.tabs.query({currentWindow: true, active: true}).then(logTabs, console.error);
 }
 
-function writeInUrlAddresseValue(AddresseValue){
-  let textTobeInserted = AddresseValue;
-  document.getElementById("urlAddresse").value= textTobeInserted;
 
-
-}
-
-
-function showIframeResults(tabs) {
+function createIframeResults(tabs) {
   let tab = tabs[0];
   let currentUrl = removeHypothesisUrl(tab.url);
   let urlAddresseValue = "<iframe width='100%' height='300' src='" + "https://via.hypothes.is/" + currentUrl + "'/>";
@@ -76,16 +79,15 @@ function showIframeResults(tabs) {
 
   }
 
-/*show Hiccup */
-function showIframe (){
+function createIframe (){
 
-  browser.tabs.query({currentWindow: true, active: true}).then(showIframeResults, console.error);
+  browser.tabs.query({currentWindow: true, active: true}).then(createIframeResults, console.error);
   
   // browser.tabs.query({currentWindow: true, active: true}).then(logTabs, console.error);
 }
 
-
-  function showHiccupResults(tabs) {
+/* Generates hiccup code - useful for Roam */
+  function createHiccupResults(tabs) {
     let tab = tabs[0];
     let currentUrl = removeHypothesisUrl(tab.url);
     let urlAddresseValue = ':hiccup[:iframe {:width "100%",  :height "500", :src "' + 'https://via.hypothes.is/' + currentUrl + '"}]';
@@ -94,28 +96,17 @@ function showIframe (){
       
   
   }
-  
 
 
-  function showHiccup(){
+  function createHiccup(){
 
-    browser.tabs.query({currentWindow: true, active: true}).then(showHiccupResults, console.error);
+    browser.tabs.query({currentWindow: true, active: true}).then(createHiccupResults, console.error);
     
     // browser.tabs.query({currentWindow: true, active: true}).then(logTabs, console.error);
   }
 
-/*only selecting the text */
-function copyTextUsingAPI(){
-  var copyText = document.getElementById("urlAddresse");
-   /* Select the text field */
-   copyText.select();
-   copyText.setSelectionRange(0, 99999); /*For mobile devices*/
-  /* Copy the text inside the text field */
- 
 
-}
-
-
+/* generates <a href >*/
 function createHrefResults(tabs){
   let tab = tabs[0];
   let currentUrl = removeHypothesisUrl(tab.url);
@@ -132,6 +123,7 @@ function createHref(){
 
 }
 
+/*Generates markdown*/
 function createMdResults(tabs){
   let tab = tabs[0];
   let currentUrl = removeHypothesisUrl(tab.url);
@@ -151,17 +143,46 @@ function createMd(){
 
 }
 
-document.getElementById("btn-opn").addEventListener("click", hypothesify);
+/* PART 2 - OTHER FUNCTIONS */
+/* 
+If the webpage is already opened in via.hypothes.is - makes sure that that there is not twice the URL to hypothes.is
+
+I always call this function for url obtained from the tab. If there is no "via.hypothes.is" present, the function does not do nothing. I find it, however, easier to do it in this way than always perform a check with "if condition". 
+
+*/
+function removeHypothesisUrl(url){
+  let currentUrl = url;
+  let hypothesisUrl = "https://via.hypothes.is/";
+  let finalUrl = currentUrl.replace(hypothesisUrl,"");
+
+  return finalUrl;
+
+}
+
+/* Select all the text when clicked on input=text URL */
+function selectAllText(){
+  var inputText = document.getElementById("urlAddresse");
+   /* Select the text field */
+   inputText.select();
+   inputText.setSelectionRange(0, 99999); /*For mobile devices*/
+  /* Copy the text inside the text field */
+ 
+
+}
+
+
+/* PART 3 - ASSIGNMENT OF LISTENERS */
+document.getElementById("btn-opn").addEventListener("click", openInHypothesis);
 
 document.getElementById("btn-href").addEventListener("click", createHref);
 document.getElementById("btn-md").addEventListener("click", createMd);
 
-document.getElementById("btn-iframe").addEventListener("click", showIframe);
+document.getElementById("btn-iframe").addEventListener("click", createIframe);
 
-document.getElementById("btn-hiccup").addEventListener("click", showHiccup);
+document.getElementById("btn-hiccup").addEventListener("click", createHiccup);
 
-document.getElementById("urlAddresse").addEventListener("click", copyTextUsingAPI);
+document.getElementById("urlAddresse").addEventListener("click", selectAllText);
 
-// document.getElementById("copyButton").addEventListener("click", copyTextUsingAPI);
+// document.getElementById("copyButton").addEventListener("click", selectAllText);
 
 
