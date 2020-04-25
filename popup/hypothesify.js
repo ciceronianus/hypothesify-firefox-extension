@@ -161,7 +161,7 @@ document.getElementById("btn-iframe").addEventListener("click", showIframe);
 document.getElementById("btn-hiccup").addEventListener("click", showHiccup);
 
 document.getElementById("urlAddresse").addEventListener("click", copyTextUsingAPI);
-document.getElementById("copyButton").addEventListener("click", copyTextUsingAPI);
+
+// document.getElementById("copyButton").addEventListener("click", copyTextUsingAPI);
 
 
-browser.browserAction.setTitle("5");

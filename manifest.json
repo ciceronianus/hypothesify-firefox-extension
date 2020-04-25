@@ -10,10 +10,19 @@
 	
 	"permissions": [
 		"<all_urls>",
-		"tabs",
-		"clipboardRead",
-		"clipboardWrite"
+		"tabs"
 	],
+
+	"background": {
+    "scripts": ["background_scripts/background_hypothesify.js"]
+  },
+	
+	"content_scripts": [
+    {
+			"matches": ["*://*/*"],
+      "js": ["content_scripts/content_hypothesify.js"]
+    }
+  ],
 	
 	"browser_action": {
 		"default_icon": "icons/icon_new.svg",
