@@ -1,52 +1,46 @@
-/*STRUCTURE: 
-!!! Important note: Since I am beginner, its structure is far from great. 
+/*
+=======================================================================================
+IMPORTANT NOTE: I am a beginner, so this code is far from perfect. You will probably find it quite messy. I apologize for the inconvenience. 
 
-There are, basically, following parts
-PART 1 - core functions fulfilling the following core actions:
+STRUCTURE OF THE CODE: 
+
+PART 1 - core functions fulfilling the following actions:
 - opening/closing the webpage in via.hypothes.is
+- creating a link 
 - creating <iframe>  
 - creating <a href> 
 - creating Markdown code
 - creating :hiccup code (for Roam)  
 
-Each of the actions is divided into two functions (unfortunately):
-- First one gets the url of the current tab
-- The second does the action. 
+When the user clicks on a button, the intermediate function "getCurrenUrlCrosroad" is called. This function serves as a crossroad: 1) it obtains the current url of the active tab, 2) it gets the id of the button that was pressed and calls the appropriate function (creating <iframe>, creating <a href> etc.). 
 
-I know that this is not great. I will, hopefully, simplify it in future. 
-
-PART 2 consists of additional functions:
-- removeHypothesisUrl()
+PART 2 - additional functions:
+- removeHypothesisUrl() - removes "via.hypothes.is" url from the current URL. This ensures that "via.hypothes.is" url does not appear twice in the generated code if the user clicks on the button when "via.hypothes.is" is already activated. 
 - selectAllText() - if the user clicks on the URL field in the popup, it selects all the text
-
+- functions handling updates and errors
 
 PART 3 - non-functions - adding corresponding listeners to elements in the popup. 
 
-*/
+PART 4 - related to the checkbox "Check for available annotations".  
+This part serves the sole purpose to allow the user to activate/deactivate the automatic searching for available public annotations for hypothes.is. 
 
-/*PART 4 - realated to the checkbox - check available annotations */
+=======================================================================================
 
-/*PART 1 - core functions */
+/*PART 1 - CORE FUNCTIONS */
 
-/* Opening the webpage in via.hypothes.is */
-
-/*the code itself*/
+/* Opening the webpage in "via.hypothes.is" */
 function openInHypothesisResults(tabs) {
-
 
   let tab = tabs[0];
   let currentUrl = tab.url;
   let hypothesisUrl = "https://via.hypothes.is/";
   let finalUrl;
 
-  /* If the webpage is already opened in hypothes.is, then remove the corresponding URL */
+  /* If the webpage is already opened in "via.hypothes.is", then remove the corresponding URL */
   if (currentUrl.includes(hypothesisUrl) == true) {
     finalUrl = currentUrl.replace(hypothesisUrl, "");
-
-
   } else {
     finalUrl = hypothesisUrl + currentUrl;
-
   }
 
 
@@ -55,52 +49,19 @@ function openInHypothesisResults(tabs) {
 
 }
 
-function openInHypothesis() {
 
-  browser.tabs.query({ currentWindow: true, active: true }).then(openInHypothesisResults, console.error);
-
-  // browser.tabs.query({currentWindow: true, active: true}).then(logTabs, console.error);
-}
-
-
-function createIframeResults(tabs) {
+/* Generates a link */
+function createLinkResults(tabs) {
   let tab = tabs[0];
   let currentUrl = removeHypothesisUrl(tab.url);
-  let urlAddresseValue = "<iframe width='100%' height='300' src='" + "https://via.hypothes.is/" + currentUrl + "'/>";
+
+  let urlAddresseValue = 'https://via.hypothes.is/' + currentUrl;
 
   document.getElementById("urlAddresse").value = urlAddresseValue;
 
-
 }
 
-function createIframe() {
-
-  browser.tabs.query({ currentWindow: true, active: true }).then(createIframeResults, console.error);
-
-  // browser.tabs.query({currentWindow: true, active: true}).then(logTabs, console.error);
-}
-
-/* Generates hiccup code - useful for Roam */
-function createHiccupResults(tabs) {
-  let tab = tabs[0];
-  let currentUrl = removeHypothesisUrl(tab.url);
-  let urlAddresseValue = ':hiccup[:iframe {:width "100%",  :height "500", :src "' + 'https://via.hypothes.is/' + currentUrl + '"}]';
-
-  document.getElementById("urlAddresse").value = urlAddresseValue;
-
-
-}
-
-
-function createHiccup() {
-
-  browser.tabs.query({ currentWindow: true, active: true }).then(createHiccupResults, console.error);
-
-  // browser.tabs.query({currentWindow: true, active: true}).then(logTabs, console.error);
-}
-
-
-/* generates <a href >*/
+/* Generates <a href> code */
 function createHrefResults(tabs) {
   let tab = tabs[0];
   let currentUrl = removeHypothesisUrl(tab.url);
@@ -111,11 +72,6 @@ function createHrefResults(tabs) {
 
 }
 
-function createHref() {
-  browser.tabs.query({ currentWindow: true, active: true }).then(createHrefResults, console.error);
-
-
-}
 
 /*Generates markdown*/
 function createMdResults(tabs) {
@@ -131,39 +87,80 @@ function createMdResults(tabs) {
 
 }
 
-function createMd() {
-  browser.tabs.query({ currentWindow: true, active: true }).then(createMdResults, console.error);
 
-
-}
-
-/* creating a link */
-function createLinkResults(tabs) {
+/* Generates <iframe> code */
+function createIframeResults(tabs) {
   let tab = tabs[0];
   let currentUrl = removeHypothesisUrl(tab.url);
-
-  let urlAddresseValue = 'https://via.hypothes.is/' + currentUrl;
+  let urlAddresseValue = "<iframe width='100%' height='300' src='" + "https://via.hypothes.is/" + currentUrl + "'/>";
 
   document.getElementById("urlAddresse").value = urlAddresseValue;
 
+
+}
+
+
+/* Generates :hiccup [:iframe] code - useful for Roam :) */
+function createHiccupResults(tabs) {
+  let tab = tabs[0];
+  let currentUrl = removeHypothesisUrl(tab.url);
+  let urlAddresseValue = ':hiccup[:iframe {:width "100%",  :height "500", :src "' + 'https://via.hypothes.is/' + currentUrl + '"}]';
+
+  document.getElementById("urlAddresse").value = urlAddresseValue;
+
+
 }
 
 
+/* Gets the url and redirects to other functions */
+async function getCurrentUrlCrossroad(){
+  let tabs = await  browser.tabs.query({ currentWindow: true, active: true });
+  
+  /* redirection */
+  let redirect  = this.getAttribute("id");
+  switch(redirect) {
+    case "btn-opn":
+      openInHypothesisResults(tabs);
+      break;
 
-function createLink() {
-  browser.tabs.query({ currentWindow: true, active: true }).then(createLinkResults, console.error);
+    
+    case "btn-link":
+      createLinkResults(tabs);
+      break;
+    
+    
+    case "btn-href":
+      createHrefResults(tabs);
+      break;
 
+      case "btn-md":
+        createMdResults(tabs);
+        break;
+  
+    
+      case "btn-iframe":
+        createIframeResults(tabs);
+        break;
+    case "btn-hiccup":
+          createHiccupResults(tabs);
+          break;
+    default:
+      // code block
+  } 
+  
 
 }
+
 
 
 /* PART 2 - OTHER FUNCTIONS */
-/* 
-If the webpage is already opened in via.hypothes.is - makes sure that that there is not twice the URL to hypothes.is
 
-I always call this function for url obtained from the tab. If there is no "via.hypothes.is" present, the function does not do nothing. I find it, however, easier to do it in this way than always perform a check with "if condition". 
+/* removeHypothesisUrl (url)
+If the webpage is already opened in "via.hypothes.is", it makes sure that that the url "via.hypothes.is" does not appear twice in the generated code.
 
+I always call this function for any url obtained from a tab. If there is no "via.hypothes.is" present in url, the function does nothing. 
 */
+
 function removeHypothesisUrl(url) {
   let currentUrl = url;
   let hypothesisUrl = "https://via.hypothes.is/";
@@ -171,21 +168,19 @@ function removeHypothesisUrl(url) {
   return finalUrl;
 }
 
-/* Select all the text when clicked on input=text URL */
+/* Selects all the text when clicked on <input type="text"> Code */
 function selectAllText() {
   var inputText = document.getElementById("urlAddresse");
-  inputText.select();    /* Select the text field */
+  inputText.select();    /* Selects the text field */
   inputText.setSelectionRange(0, 99999); /*For mobile devices*/
 }
 
 
 
-/* dealing with updates and erros */
+/* deals with updates and erros */
 function onOpened() {
-
   console.log(`Options page opened`);
 }
-
 
 function onUpdated(tab) {
   console.log(`Updated tab: ${tab.id}`);
@@ -198,34 +193,33 @@ function onError(error) {
 
 
 /* PART 3 - ASSIGNMENT OF LISTENERS */
-document.getElementById("btn-opn").addEventListener("click", openInHypothesis);
+document.getElementById("btn-opn").addEventListener("click", getCurrentUrlCrossroad);
 
-document.getElementById("btn-link").addEventListener("click", createLink);
+document.getElementById("btn-link").addEventListener("click", getCurrentUrlCrossroad);
 
-document.getElementById("btn-href").addEventListener("click", createHref);
+document.getElementById("btn-href").addEventListener("click", getCurrentUrlCrossroad);
 
-document.getElementById("btn-md").addEventListener("click", createMd);
+document.getElementById("btn-md").addEventListener("click", getCurrentUrlCrossroad);
 
-document.getElementById("btn-iframe").addEventListener("click", createIframe);
+document.getElementById("btn-iframe").addEventListener("click", getCurrentUrlCrossroad);
 
-document.getElementById("btn-hiccup").addEventListener("click", createHiccup);
+document.getElementById("btn-hiccup").addEventListener("click", getCurrentUrlCrossroad);
 
 document.getElementById("urlAddresse").addEventListener("click", selectAllText);
 
-/* For future - options */
+/* For future - LINK TO OPTIONS*/
 // document.getElementById("btn-options").addEventListener("click", openOptions);
 
 
 
-
-
-
-
-/*-------------- saving ------------*/
+/* PART 4 - THE CHECKBOX */
+/*handling message - only for debugging - checking whether the communication between the background script and the popup script works*/
 function handleResponse(message) {
   console.log(`Message from the background script:  ${message.response}`);
 }
 
+
+/* This function forces the reload of the process in the background script that checks the availability of public annotations. It is called when the popup windows is opened or when the state of the checkbox is changed. */ 
 function forceTheReload(checkedBox) {
   var sending = browser.runtime.sendMessage({
     checked: checkedBox
@@ -233,6 +227,7 @@ function forceTheReload(checkedBox) {
   sending.then(handleResponse, onError);
 }
 
+/* Restores the last saved option. This function is called on every opening of the popup because the popup script hypothesify.js restarts with every opening of this window (unlike the background script that runs all the time).*/ 
 function restoreOptions() {
 
   function setCurrentChoice(result) {
@@ -247,24 +242,27 @@ function restoreOptions() {
   }
   // function onError(error) {
   //   console.log(`Error: ${error}`);
-}
+  // }
 
+/* loads the last checked value */
 let getting = browser.storage.sync.get("checked");
 getting.then(setCurrentChoice, onError);
 }
 
+/* restoreOptions() is called every time the popup window is opened. */
 document.addEventListener("DOMContentLoaded", restoreOptions);
 
 
+/* This function is being called when there is a change in the state of the checkbox. */
 function checkedUrl() {
   if (document.getElementById("checkUrl").checked) {
-    //checkbox is checked
+    // Checkbox is checked
     browser.storage.sync.set({
       checked: true
     });
     forceTheReload(true);
   } else {
-    // Checkbox is not checked..
+    // Checkbox is not checked
     browser.storage.sync.set({
       checked: false
     });
@@ -275,12 +273,3 @@ function checkedUrl() {
 
 document.getElementById("checkUrl").addEventListener("change", checkedUrl);
 
-
-
-/* TODO */
-/*opens Options() {}*/
-// function openOptions() {
-//   var opening = browser.runtime.openOptionsPage();
-//   opening.then(onOpened, onError);
-
-// }
