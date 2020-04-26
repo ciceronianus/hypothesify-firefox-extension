@@ -15,17 +15,21 @@ Both seem to be necessary to me for the right function of the updating of the ba
 */
 
 
-
+/* Important check whether the givenUrl can be processed and sent to api.hypothes.is.
+At this moment, it only checks the settings "Check available public annotations", in future, it will also check the blacklist and whitelist of webpages.
+*/
 function allowedUrl(givenUrl){
   let url = givenUrl;
   
   function publicAnnotations(result){
+    
     if (result.checked){
+      /* Process further */
       getAnnotations(givenUrl);
    
 
     } else {
-      
+      /* Don't process */
       browser.browserAction.setBadgeText({
         text: "×"
       });
@@ -35,23 +39,19 @@ function allowedUrl(givenUrl){
   }
 
 
-  function onError(error) {
-    console.log(`Error: ${error}`);
-  }
   
-
+  
+  /* getting the state of the checkbox "Check available public annotations" from storage api */
   let getting = browser.storage.sync.get("checked");
   getting.then(publicAnnotations, onError);
 
-  
-
 }
 
+/* This is the same function as in "hypothesify.js" - it should be somehow merged in future */
 function removeHypothesisUrl(url){
   let currentUrl = url;
   let hypothesisUrl = "https://via.hypothes.is/";
   let finalUrl = currentUrl.replace(hypothesisUrl,"");
-
   return finalUrl;
 
 }
@@ -65,20 +65,24 @@ async function getAnnotations(givenUrl) {
   const fetchResult = fetch(query);
   const response = await fetchResult;
   const jsonData = await response.json();
-  console.log("hi");
   
-  /*The results contain ".total" - the total number of corresponding annotations on the webpage. If the number of annotations is higher than > 0 - display the number. If it is 0, display nothing. */
-
-  if (jsonData.total > 0) {
   browser.browserAction.setBadgeText({
     text: jsonData.total.toString()
   });
-  } else {
-    browser.browserAction.setBadgeText({
-      text: "0"
-    });
 
-  }
+  /* Currently unused: */
+  /*The results contain ".total" - the total number of corresponding annotations on the webpage. If the number of annotations is higher than > 0 - display the number. If it is 0, display nothing. */
+
+  // if (jsonData.total > 0) {
+  // browser.browserAction.setBadgeText({
+  //   text: jsonData.total.toString()
+  // });
+  // } else {
+  //   browser.browserAction.setBadgeText({
+  //     text: "0"
+  //   });
+
+  // }
 }
 
 /* if the tab is updated, it is quite easy to get its url with onUpdated function */
@@ -94,7 +98,6 @@ function tabUpdated(tabId, changeInfo, tabInfo) {
 browser.tabs.onUpdated.addListener(tabUpdated);
 
 
-
 /* It is more tricky to get the url of the tab, if it is just activate */
 function tabActivatedUrl(tabs) {
   let tab = tabs[0]; // Safe to assume there will only be one result
@@ -108,8 +111,6 @@ function tabActivated(){
 }
 
 browser.tabs.onActivated.addListener(tabActivated);
-
-
 
 
 function handleMessage(request, sender, sendResponse) {
@@ -134,6 +135,8 @@ function handleMessage(request, sender, sendResponse) {
 
 browser.runtime.onMessage.addListener(handleMessage);
 
+/* handlichg of errors etc. */
 
-
-
+function onError(error) {
+  console.log(`Error: ${error}`);
+}
