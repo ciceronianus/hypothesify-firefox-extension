@@ -16,7 +16,7 @@ When the user clicks on a button, the intermediate function "getCurrenUrlCrosroa
 
 PART 2 - additional functions:
 - removeHypothesisUrl() - removes "via.hypothes.is" url from the current URL. This ensures that "via.hypothes.is" url does not appear twice in the generated code if the user clicks on the button when "via.hypothes.is" is already activated. 
-- selectAllText() - if the user clicks on the URL field in the popup, it selects all the text
+- selectAllText() - if the user clicks on the "generatedCodeField" in the popup, it selects all the text
 - functions handling updates and errors
 
 PART 3 - non-functions - adding corresponding listeners to elements in the popup. 
@@ -55,9 +55,9 @@ function createLinkResults(tabs) {
   let tab = tabs[0];
   let currentUrl = removeHypothesisUrl(tab.url);
 
-  let urlAddresseValue = 'https://via.hypothes.is/' + currentUrl;
+  let generatedCode = 'https://via.hypothes.is/' + currentUrl;
 
-  document.getElementById("urlAddresse").value = urlAddresseValue;
+  document.getElementById("generatedCodeField").value = generatedCode;
 
 }
 
@@ -66,9 +66,9 @@ function createHrefResults(tabs) {
   let tab = tabs[0];
   let currentUrl = removeHypothesisUrl(tab.url);
   let currentTitle = tab.title;
-  let urlAddresseValue = '<a href="' + 'https://via.hypothes.is/' + currentUrl + '">' + currentTitle + '</a>';
+  let generatedCode = '<a href="' + 'https://via.hypothes.is/' + currentUrl + '">' + currentTitle + '</a>';
 
-  document.getElementById("urlAddresse").value = urlAddresseValue;
+  document.getElementById("generatedCodeField").value = generatedCode;
 
 }
 
@@ -79,11 +79,11 @@ function createMdResults(tabs) {
   let currentUrl = removeHypothesisUrl(tab.url);
 
   let currentTitle = tab.title;
-  let urlAddresseValue = '[' + currentTitle + '](' + 'https://via.hypothes.is/' + currentUrl + ')';
+  let generatedCode = '[' + currentTitle + '](' + 'https://via.hypothes.is/' + currentUrl + ')';
 
 
 
-  document.getElementById("urlAddresse").value = urlAddresseValue;
+  document.getElementById("generatedCodeField").value = generatedCode;
 
 }
 
@@ -92,9 +92,9 @@ function createMdResults(tabs) {
 function createIframeResults(tabs) {
   let tab = tabs[0];
   let currentUrl = removeHypothesisUrl(tab.url);
-  let urlAddresseValue = "<iframe width='100%' height='300' src='" + "https://via.hypothes.is/" + currentUrl + "'/>";
+  let generatedCode = "<iframe width='100%' height='300' src='" + "https://via.hypothes.is/" + currentUrl + "'/>";
 
-  document.getElementById("urlAddresse").value = urlAddresseValue;
+  document.getElementById("generatedCodeField").value = generatedCode;
 
 
 }
@@ -104,9 +104,9 @@ function createIframeResults(tabs) {
 function createHiccupResults(tabs) {
   let tab = tabs[0];
   let currentUrl = removeHypothesisUrl(tab.url);
-  let urlAddresseValue = ':hiccup[:iframe {:width "100%",  :height "500", :src "' + 'https://via.hypothes.is/' + currentUrl + '"}]';
+  let generatedCode = ':hiccup[:iframe {:width "100%",  :height "500", :src "' + 'https://via.hypothes.is/' + currentUrl + '"}]';
 
-  document.getElementById("urlAddresse").value = urlAddresseValue;
+  document.getElementById("generatedCodeField").value = generatedCode;
 
 
 }
@@ -170,7 +170,7 @@ function removeHypothesisUrl(url) {
 
 /* Selects all the text when clicked on <input type="text"> Code */
 function selectAllText() {
-  var inputText = document.getElementById("urlAddresse");
+  var inputText = document.getElementById("generatedCodeField");
   inputText.select();    /* Selects the text field */
   inputText.setSelectionRange(0, 99999); /*For mobile devices*/
 }
@@ -205,7 +205,7 @@ document.getElementById("btn-iframe").addEventListener("click", getCurrentUrlCro
 
 document.getElementById("btn-hiccup").addEventListener("click", getCurrentUrlCrossroad);
 
-document.getElementById("urlAddresse").addEventListener("click", selectAllText);
+document.getElementById("generatedCodeField").addEventListener("click", selectAllText);
 
 /* For future - LINK TO OPTIONS*/
 // document.getElementById("btn-options").addEventListener("click", openOptions);
