@@ -1,7 +1,7 @@
 /*STRUCTURE: 
 !!! Important note: Since I am beginner, its structure is far from great. 
 
-There are, basically, 3 PARTS:
+There are, basically, following parts
 PART 1 - core functions fulfilling the following core actions:
 - opening/closing the webpage in via.hypothes.is
 - creating <iframe>  
@@ -20,14 +20,23 @@ PART 2 consists of additional functions:
 - selectAllText() - if the user clicks on the URL field in the popup, it selects all the text
 
 
-PART 3 - non-functions - adding corresponding elements 
+PART 3 - non-functions - adding corresponding listeners to elements in the popup. 
 
 */
+
+/*PART 4 - realated to the checkbox - check available annotations */
 
 /*PART 1 - core functions */
 
 /* Opening the webpage in via.hypothes.is */
 /* dealing with updates and erros */
+function onOpened(){
+ 
+    console.log(`Options page opened`);
+  }
+
+
+
 function onUpdated(tab) {
   console.log(`Updated tab: ${tab.id}`);
 }
@@ -143,6 +152,26 @@ function createMd(){
 
 }
 
+/* creating a link */
+function createLinkResults(tabs){
+  let tab = tabs[0];
+  let currentUrl = removeHypothesisUrl(tab.url);
+  
+  let urlAddresseValue = 'https://via.hypothes.is/' + currentUrl ;
+
+  document.getElementById("urlAddresse").value=  urlAddresseValue;
+
+}
+
+
+
+function createLink(){
+  browser.tabs.query({currentWindow: true, active: true}).then(createLinkResults, console.error);
+
+
+}
+
+
 /* PART 2 - OTHER FUNCTIONS */
 /* 
 If the webpage is already opened in via.hypothes.is - makes sure that that there is not twice the URL to hypothes.is
@@ -170,12 +199,22 @@ function selectAllText(){
 
 }
 
+function openOptions() {
+  var opening = browser.runtime.openOptionsPage();
+  opening.then(onOpened, onError);
+
+}
+
 
 /* PART 3 - ASSIGNMENT OF LISTENERS */
 document.getElementById("btn-opn").addEventListener("click", openInHypothesis);
 
 document.getElementById("btn-href").addEventListener("click", createHref);
+
 document.getElementById("btn-md").addEventListener("click", createMd);
+
+document.getElementById("btn-link").addEventListener("click", createLink);
+
 
 document.getElementById("btn-iframe").addEventListener("click", createIframe);
 
@@ -183,6 +222,84 @@ document.getElementById("btn-hiccup").addEventListener("click", createHiccup);
 
 document.getElementById("urlAddresse").addEventListener("click", selectAllText);
 
+
+
+// document.getElementById("btn-options").addEventListener("click", openOptions);
+
+
 // document.getElementById("copyButton").addEventListener("click", selectAllText);
 
 
+
+
+
+
+/*-------------- saving ------------*/
+function handleResponse(message) {
+  console.log(`Message from the background script:  ${message.response}`);
+}
+
+function handleError(error) {
+  console.log(`Error: ${error}`);
+}
+
+
+function forceTheReload(checkedBox) {
+  var sending = browser.runtime.sendMessage({
+    checked: checkedBox
+  });
+  sending.then(handleResponse, handleError);  
+}
+
+function restoreOptions() {
+
+  function setCurrentChoice(result) {
+    console.log("Previous choice was" + result.checked);
+    if (result.checked){
+      console.log("check.........")
+      let att = document.createAttribute("checked");
+      att.value = "checked";
+      document.getElementById("checkUrl").setAttributeNode(att);
+      forceTheReload(true);
+
+    } else {
+      forceTheReload(false);
+
+    }
+
+    
+  }
+
+  function onError(error) {
+    console.log(`Error: ${error}`);
+  }
+
+  let getting = browser.storage.sync.get("checked");
+  getting.then(setCurrentChoice, onError);
+}
+
+document.addEventListener("DOMContentLoaded", restoreOptions);
+
+
+function checkedUrl(){
+
+  if(document.getElementById("checkUrl").checked) {
+    // Checkbox is checked..
+    console.log("checked");
+    browser.storage.sync.set({
+      checked: true
+      
+    });
+    forceTheReload(true);
+} else {
+    // Checkbox is not checked..
+    console.log("unchecked");
+    browser.storage.sync.set({
+      checked: false
+    });
+    forceTheReload(false);
+}
+
+}
+
+document.getElementById("checkUrl").addEventListener("change", checkedUrl);

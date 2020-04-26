@@ -3,12 +3,11 @@
 <html>
   <head>
     <meta charset="utf-8">
+    
     <link rel="stylesheet" href="hypothesify.css"/>
   </head>
 
 <body>
-  <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-  <!-- Created with Inkscape (http://www.inkscape.org/) -->
   
   <svg
      xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -100,25 +99,29 @@
            y="-15.123305">h:</tspan></text>
     </g>
   </svg>
- 
-  <!-- <h1>hipothesify</h1> -->
+
 
   <div id="popup-content" class="popup-content">
     <ul>
     <li class="btn" id="btn-opn">Open / close Hypothes.is</li> 
+    <li class="btn" id="btn-link">Create a link</li> 
     <li class="btn" id="btn-href">Create <code>&lt;a&gt;</code></li> 
     <li class="btn" id="btn-md">Create Markdown</li>
     <li class="btn" id="btn-iframe">Create <code>&lt;iframe&gt;</code></li> 
-    <li class="btn" id="btn-hiccup">Create :hiccup [:iframe]</li> 
+    <li class="btn" id="btn-hiccup">Create <code>:hiccup [:iframe]</code></li> 
   </ul>
   <form>
   
     <input type="text" id="urlAddresse" name="urlAddresse" class="urlAdresseText" value="URL" readonly/>
-    <!-- <button id="copyButton">copy</button> -->
+   
+
   </form>
+  <!--<button class="btn-options" id="btn-options">Settings</button>-->
+  <label style="color:black">Check available public annotations:</label>
+  <input id="checkUrl" type="checkbox">
   </div>
 
-
+  <!-- popup script -->
   <script src="hypothesify.js"></script>
 
 </body>

@@ -1,33 +1,36 @@
 {
 	"manifest_version": 2,
 	"name": "Hypothesify",
-	"version": "0.0.1",
+	"version": "1.0",
 	
-	"description": "Opens as hypothes.is", 
+	"description": "Unofficial Hypothes.is extension", 
 	"icons": {
-		"48": "icons/icon_new.svg"
+		"48": "icons/icon.svg"
 	},
 	
 	"permissions": [
 		"<all_urls>",
 		"activeTab",
+		"storage",
 		"tabs"
 	],
 
+	"applications": {
+    "gecko": {
+      "id": "ciceronianus@outlook.com"
+		}
+	},
+
 	"background": {
     "scripts": ["background_scripts/background_hypothesify.js"]
-  },
-	
-	"content_scripts": [
-    {
-			"matches": ["*://*/*"],
-      "js": ["content_scripts/content_hypothesify.js"]
-    }
-  ],
-	
+	},
+		
 	"browser_action": {
-		"default_icon": "icons/icon_new.svg",
+		"default_icon": "icons/icon.svg",
 		"default_title": "Hypothesify",
 		"default_popup": "popup/hypothesify.html"
 	}
+
+	
+  
 }
