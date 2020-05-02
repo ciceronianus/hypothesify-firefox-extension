@@ -2,6 +2,8 @@
 ## 🧐 What is Hypothesify?
 Hypothesify is a small Firefox extension for the annotation tool [Hypothes.is](https://hypothes.is) that allows private and public annotation of any website or PDF. 
 
+You can download it from [Firefox ADD-ONS](https://addons.mozilla.org/en-US/firefox/addon/hypothesify/).
+
 Currently *(26th April 2020)*, there is no Firefox extension for this great tool. So I decided to make one as part of my learning process of JavaScript. This explains why the code is not really nice and there will be definitely some 🐛. *Sorry for the inconvenience.*   
 
 
