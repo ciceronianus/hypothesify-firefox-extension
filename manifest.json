@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "Hypothesify",
-	"version": "1.0",
+	"version": "1.1",
 	
 	"description": "Unofficial Hypothes.is extension", 
 	"icons": {
@@ -9,7 +9,6 @@
 	},
 	
 	"permissions": [
-		"<all_urls>",
 		"activeTab",
 		"storage",
 		"tabs"
@@ -24,7 +23,11 @@
 	"background": {
     "scripts": ["background_scripts/background_hypothesify.js"]
 	},
-		
+	
+	"options_ui":{
+		"page": "options/options.html"
+	},
+
 	"browser_action": {
 		"default_icon": "icons/icon.svg",
 		"default_title": "Hypothesify",

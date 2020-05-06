@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+  </head>
+
+  <body>
+<!-- https://via.hypothes.is/https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Implement_a_settings_page -->
+<p>Activate or deactivate a particular function.</p>
+    <table>
+      <tr>
+        <td>Create a link</td><td><input class="checkbox" type="checkbox" id="btn-link" ></td> 
+      </tr>
+      <tr>
+        <td>Create <code>&lt;a&gt;</code></td><td><input class="checkbox" type="checkbox" id="btn-href" ></td> 
+      </tr>
+      <tr>
+        <td>Create Markdown</td><td><input class="checkbox" type="checkbox" id="btn-md" ></td>
+      </tr>
+      
+      <tr>
+        <td>Create <code>&lt;iframe&gt;</td><td><input  class="checkbox" type="checkbox" id="btn-iframe" ></td>
+      </tr>
+      
+      <tr>
+        <td>Create <code>:hiccup [:iframe]</code></td><td><input class="checkbox" type="checkbox" id="btn-hiccup" ></td>
+      </tr>
+      
+      <tr>
+        <td>Create <code>{{pdf: }}</code></td><td><input  class="checkbox" type="checkbox" id="btn-pdf"></td>
+      </tr>
+
+    </table>
+         
+    
+
+    <script src="options.js"></script>
+
+  </body>
+
+</html>

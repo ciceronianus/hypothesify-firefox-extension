@@ -111,6 +111,15 @@ function createHiccupResults(tabs) {
 
 }
 
+function createPdfResults(tabs) {
+  let tab = tabs[0];
+  let currentUrl = removeHypothesisUrl(tab.url);
+  let generatedCode = '{{pdf: https://via.hypothes.is/' + currentUrl + '}}';
+
+  document.getElementById("generatedCodeField").value = generatedCode;
+
+
+}
 
 /* Gets the url and redirects to other functions */
 async function getCurrentUrlCrossroad(){
@@ -144,6 +153,9 @@ async function getCurrentUrlCrossroad(){
     case "btn-hiccup":
           createHiccupResults(tabs);
           break;
+    case "btn-pdf":
+      createPdfResults(tabs);
+      break;
     default:
       // code block
   } 
@@ -193,6 +205,28 @@ function onError(error) {
 
 
 /* PART 3 - ASSIGNMENT OF LISTENERS */
+
+/* This script decides whether an element should be shown or not */
+document.querySelectorAll('li.btn').forEach(item => {
+  console.log(item.id);
+  browser.storage.sync.get(item.id).then((result) => {
+    if (result[item.id] == false) {
+      item.style.display = "none";
+
+    } else {
+      item.style.display = "";
+
+    } 
+    
+  
+  });
+ 
+
+
+});
+
+
+
 document.getElementById("btn-opn").addEventListener("click", getCurrentUrlCrossroad);
 
 document.getElementById("btn-link").addEventListener("click", getCurrentUrlCrossroad);
@@ -205,7 +239,22 @@ document.getElementById("btn-iframe").addEventListener("click", getCurrentUrlCro
 
 document.getElementById("btn-hiccup").addEventListener("click", getCurrentUrlCrossroad);
 
+document.getElementById("btn-pdf").addEventListener("click", getCurrentUrlCrossroad);
+
+
 document.getElementById("generatedCodeField").addEventListener("click", selectAllText);
+
+document.getElementById("btn-export").addEventListener("click",() => {
+  var creating = browser.tabs.create({
+    url:"../export_page/export_page.html"
+  });
+  creating.then(()=> {console.log("export");}, (error) => {console.log("error")});
+
+  
+
+
+});
+
 
 /* For future - LINK TO OPTIONS*/
 // document.getElementById("btn-options").addEventListener("click", openOptions);
