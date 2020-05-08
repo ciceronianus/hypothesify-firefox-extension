@@ -1,11 +1,41 @@
 <htm>
 <head>
-<script src="export_page.js"></script>
+  <meta charset="utf-8">
+  <script src="export_page.js" defer></script>
+  <link rel="stylesheet" href="export_page.css"/>
 </head>
 
 <body>
 <main>
-  <h1>Export page</h1>
+  <h1>Hypothes.is</h1>
+  <h2>Options</h2>
+  <label for="inpTitle">Title:</label> <br />
+  <input id="inpTitle" type="text"/> <br />
+
+
+  <label for="inpUrl">URL:</label> <br />
+  <input id="inpUrl" type="text"/> <br />
+  <!----
+  <select id="sorting">
+    <option value="time">Time</option>
+    <option value="place">Place</option>
+  </select>
+  <br />
+-->
+ <p>Which annotations?</p>
+  <input type="radio" id="pubAnn-none" value="none"/>
+  <label for="pubAnn-none">Only from the user</label>
+
+   <br />
+   <input type="radio" id="pubAnn-all" value="none"/>
+  <label for="pubAnn-all">All public annotations</label>
+  
+ 
+
+  <button id="btn-export">Start exporting</button>  
+
+  
+
   <div id="exportDiv">
     
   </div>

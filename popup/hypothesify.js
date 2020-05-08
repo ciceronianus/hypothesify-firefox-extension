@@ -208,7 +208,7 @@ function onError(error) {
 
 /* This script decides whether an element should be shown or not */
 document.querySelectorAll('li.btn').forEach(item => {
-  console.log(item.id);
+  // console.log(item.id);
   browser.storage.sync.get(item.id).then((result) => {
     if (result[item.id] == false) {
       item.style.display = "none";
@@ -244,11 +244,34 @@ document.getElementById("btn-pdf").addEventListener("click", getCurrentUrlCrossr
 
 document.getElementById("generatedCodeField").addEventListener("click", selectAllText);
 
+/*for the export button */
 document.getElementById("btn-export").addEventListener("click",() => {
-  var creating = browser.tabs.create({
-    url:"../export_page/export_page.html"
-  });
-  creating.then(()=> {console.log("export");}, (error) => {console.log("error")});
+  browser.tabs.query({ currentWindow: true, active: true }).then(tabs => {
+    let tab = tabs[0];
+    const title = tab.title;
+    
+    let currentUrl = removeHypothesisUrl(tab.url);
+    // console.log(currentUrl.substr(-1));
+
+    /* removes last "/" if present */
+    if (currentUrl.substr(-1) == "/") {
+      currentUrl = currentUrl.substring(0, currentUrl.length - 1);
+
+    }
+    
+    let finalUrl = encodeURI("../export_page/export_page.html?url=" + currentUrl + "&title=" + title + "");
+    
+    console.log(`Final url: ${finalUrl}`);
+
+    var creating = browser.tabs.create({
+      url:`${finalUrl}`
+    });
+    creating.then(()=> {console.log("export");}, (error) => {console.log("error")});
+
+
+        })
+
+ 
 
   
 
