@@ -6,12 +6,10 @@ function compare(a, b) {
   let comparison = 0;
   if (aItem > bItem) {
       comparison = 1;
-
   } else if (aItem<bItem) {
     comparison = -1
   }
   return comparison;
-
 }
 
 
@@ -19,10 +17,34 @@ function compare(a, b) {
 // let element = document.getElementById("exportDiv");
 // console.log(element);
 
+function USERidrestore (){
+  console.log("loading USERid");
+  browser.storage.sync.get("USERid").then((result) => 
+    {document.getElementById("inpUSERid").value = result["USERid"] || ""; 
+    console.log(result);
+    })
+  
+  }
+
+  function APIkeyRestore (){
+    console.log("loading APIkey");
+    browser.storage.sync.get("APIkey").then((result) => 
+      {document.getElementById("inpAPIkey").value = result["APIkey"] || ""; 
+      console.log(result);
+      })
+    
+    }
+
+  USERidrestore();
+  APIkeyRestore();
+
+
+
+
 /* Definition of constant */
 /* to be changed - to be put into settings */
-const APIKEYhypo = "6879-7UnkOVwjyJTw7EnCky1LrdhdMa8wJGBfFhmwftbfzKM";
-const USERIDhypo = "Ciceronianus";
+// const APIKEYhypo = "6879-7UnkOVwjyJTw7EnCky1LrdhdMa8wJGBfFhmwftbfzKM";
+// const USERIDhypo = "Ciceronianus";
 // const URLhypo = "http://teicat.huma-num.fr/"
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -42,9 +64,19 @@ document.getElementById("inpTitle").value = URLtitle;
 /*functions */
 
 function exportHypothesis() {
+  const USERIDhypo = document.getElementById("privateAnn").checked ? "&user=" + document.getElementById("inpUSERid").value : "";
+  
+  console.log(`UserId: ${USERIDhypo}`);
+  
+  const APIKEYhypo = document.getElementById("inpAPIkey").value;
+
   const url = document.getElementById("inpUrl").value;
+
   const title = document.getElementById("inpTitle").value;
-  const query = `https://api.hypothes.is/api/search?url=${url}&user=${USERIDhypo}`;
+  
+  /*const query = `https://api.hypothes.is/api/search?url=${url}&user=${USERIDhypo}`;*/
+  
+  const query = `https://api.hypothes.is/api/search?url=${url}` + USERIDhypo;
   console.log(`Query: ${query}`);
   fetch(query, {
     method: "GET",
@@ -60,32 +92,41 @@ function exportHypothesis() {
       console.log(data);
 
 
-      /* Constructing the array of objects */
-     
-
       let collectionOfAnnotations = [];
-     
+      console.log("-------------------------------");
       for (i = 0, l = data.rows.length; i < l; i++) {
-         console.log(data.rows[i].target[0].selector[1].start);
+        /*!!! causes problems */
+        
+        /*
         let array = data.rows[i].target[0].selector;
-        console.log(array);
         let obj = array.find(o => o.type === "TextQuoteSelector");
-        console.log(obj);
-        let annotationBlock = {
-          highlight: data.rows[i].target[0].selector[2].exact,
-          annotation: data.rows[i].text,
-          tags: data.rows[i].tags,
-          place: data.rows[i].target[0].selector[1].start,
-          link: data.rows[i].links.incontext
-        };
+        */
+        console.log("check --");
+        console.log(get(['rows', i, 'target', 0, 'selector', 2, 'exact'], data));
+
+        
+        let annotationBlock = {};
+        annotationBlock.highlight = get(['rows', i, 'target', 0, 'selector', 2, 'exact'], data) || "";
+
+        annotationBlock.annotation = data.rows[i].text || "";
+        annotationBlock.tags = data.rows[i].tags || "";
+        annotationBlock.place = get(['rows', i, 'target', 0, 'selector', 1, 'start'], data) || ""; 
+        annotationBlock.link = get(['rows', i, 'links', 'incontext'], data) || "" ;
+
+
+        // let annotationBlock = {
+        //   highlight: data.rows[i].target[0].selector[2].exact,
+        //   annotation: data.rows[i].text,
+        //   tags: data.rows[i].tags,
+        //   place: data.rows[i].target[0].selector[1].start,
+        //   link: data.rows[i].links.incontext
+        // };
         collectionOfAnnotations.push(annotationBlock);
        
       
       }
-      
      
       collectionOfAnnotations.sort(compare);
-      
       
       /* Creating basic elements */
       let heading = document.createElement("h1");
@@ -104,7 +145,7 @@ function exportHypothesis() {
 
       collectionOfAnnotations.forEach((element, index) => {
           const markup = `<li id="highlight-${index}">Highlight:: ${element.highlight}
-<ul><li>Annotation::${element.annotation}</li><li>Link:: [Link](${element.link})</li><li>Tags:: ${element.tags.map(elmt => `#${elmt}, `).join('')}</li></ul></li>`
+<ul><li>Annotation::${element.annotation}</li><li>[Link](${element.link})</li><li>Tags:: ${element.tags.map(elmt => `#${elmt}, `).join('')}</li></ul></li>`
           list.innerHTML = list.innerHTML + markup;
       });
 
@@ -112,38 +153,11 @@ function exportHypothesis() {
       document.getElementById("exportDiv").appendChild(heading);
       document.getElementById("exportDiv").appendChild(list);
     
-     
-     
-      // for (i = 0, l = data.rows.length; i < l; i++) {
-      //   let annotation = document.createElement("li");
-      //   annotation.id = "highlight-" + i;
-      //   let contentList = document.createElement("ul");
-      //   let comment = document.createElement("li");
-      //   let tagsList = document.createElement("li");
-      //   annotation.innerHTML = "Highlight:: " + data.rows[i].target[0].selector[2].exact;
-      //   comment.innerHTML = "Annotation:: " + data.rows[i].text;
-      //   let annotationBlock = {
-      //     annotation: data.rows[i].target[0].selector[2].exact,
-      //     comment: data.rows[i].text,
-      //     tags: data.rows[i].tags,
-      //     place: data.rows[i].target[0].selector[1].start,
-      //     link: data.rows[i].links.incontext
-      //   };
-      //   collectionOfAnnotations.push(annotationBlock);
-      //   console.log(annotationBlock);
-      //   let tags = "Tags:: ";
-      //   for (j = 0, m = data.rows[i].tags.length; j < m; j++) {
-      //     tags = tags + "#" + data.rows[i].tags[j] + " ";
-      //   }
-      //   tagsList.innerHTML = tags;
-      //   contentList.appendChild(comment);
-      //   contentList.appendChild(tagsList);
-      //   annotation.appendChild(contentList);
-      //   document.getElementById("exportList").appendChild(annotation);
-      // }
     
     });
 }
 // APIcall(query);
 
 
+const get = (p, o) =>
+  p.reduce((xs, x) => (xs && xs[x]) ? xs[x] : null, o);

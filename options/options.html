@@ -3,11 +3,13 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="options.css"/>
+    <link rel="stylesheet" href="w3.css"/>
   </head>
 
   <body>
 <!-- https://via.hypothes.is/https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Implement_a_settings_page -->
-<p>Activate or deactivate a particular function.</p>
+<h2>Menu items</h2>
     <table>
       <tr>
         <td>Create a link</td><td><input class="checkbox" type="checkbox" id="btn-link" ></td> 
@@ -32,8 +34,23 @@
       </tr>
 
     </table>
-         
-    
+       
+    <h2><img src="logo-hypothesis.png" height="30px"/> Hyptothes.is account</h2>
+    <table>
+      <!-- <tr>
+        <td>Check for private annotations</td><td><input class="checkbox" type="checkbox" id="" disabled></td> 
+      </tr> -->
+      <tr>
+        <td>User</td><td><input class="textInput" type="type" id="USERid" ></td> 
+      </tr>
+      <tr>
+        <td>API Key</td><td><input class="textInput" type="type" id="APIkey" ></td> 
+      </tr>
+    </table>
+    <button class="btn-save" id="btn-save">Save account</button>
+    <button class="btn-delete" id="btn-delete">Delete account </button>
+
+    <p></p>
 
     <script src="options.js"></script>
 

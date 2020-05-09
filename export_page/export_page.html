@@ -1,44 +1,95 @@
 <htm>
-<head>
-  <meta charset="utf-8">
-  <script src="export_page.js" defer></script>
-  <link rel="stylesheet" href="export_page.css"/>
-</head>
 
-<body>
-<main>
-  <h1>Hypothes.is</h1>
-  <h2>Options</h2>
-  <label for="inpTitle">Title:</label> <br />
-  <input id="inpTitle" type="text"/> <br />
+  <head>
+    <meta charset="utf-8">
+    <script src="export_page.js" defer></script>
+    <link rel="stylesheet" href="export_page.css" />
+    <link rel="stylesheet" href="w3.css" />
+  </head>
+
+  <body>
+    <!-- https://www.w3schools.com/w3css/w3css_input.asp-->
+    <main class="w3-container">
+      <div class="w3-container w3-light-gray">
+        <h1><img src="logo-hypothesis.png" height="40px"/> Hypothes.is - export</h1>
+      </div>
+      <div class="w3-container w3-blue">
+        <h2>Account information </h2>
+      </div>
+      <form class="w3-container">
+        <label for="inpUSERid">USER id</label> <br />
+        <input class="w3-input w3-border" id="inpUSERid" type="text" /> 
 
 
-  <label for="inpUrl">URL:</label> <br />
-  <input id="inpUrl" type="text"/> <br />
-  <!----
+        <label for="inpAPIkey">API Key</label> <br />
+        <input class="w3-input w3-border" id="inpAPIkey" type="text" />
+        <!----
   <select id="sorting">
     <option value="time">Time</option>
     <option value="place">Place</option>
   </select>
   <br />
+
 -->
- <p>Which annotations?</p>
-  <input type="radio" id="pubAnn-none" value="none"/>
-  <label for="pubAnn-none">Only from the user</label>
+      </form>
 
-   <br />
-   <input type="radio" id="pubAnn-all" value="none"/>
-  <label for="pubAnn-all">All public annotations</label>
-  
- 
+      <div class="w3-container w3-green">
+        <h2>Metadata</h2>
+      </div>
+      <form class="w3-container">
+        <label for="inpTitle">Title:</label> <br />
+        <input class="w3-input w3-border" id="inpTitle" type="text" /> <br />
 
-  <button id="btn-export">Start exporting</button>  
 
-  
+        <label for="inpUrl">URL:</label> <br />
+        <input class="w3-input w3-border" id="inpUrl" type="text" /> <br />
+        <!----
+  <select id="sorting">
+    <option value="time">Time</option>
+    <option value="place">Place</option>
+  </select>
+  <br />
 
-  <div id="exportDiv">
-    
-  </div>
-</main>
-</body>
+-->
+      </form>
+      <div class="w3-container w3-red">
+        <h2>Export options</h2>
+      </div>
+      <form class="w3-container">
+        <div class="w3-container">        
+          <input class="w3-radio" name="exportSelection" type="radio" id="privateAnn" value="private" checked="checked"/>
+        <label for="pubAnn-none" checked>Only users's annotations</label>
+
+
+        <input class="w3-radio" name="exportSelection" type="radio" id="pubAnn" value="public"/>
+        <label for="pubAnn-all">Also public annotations</label>
+      </div>
+      <div class="w3-container">
+        <h3>Customization (options will be remembered)</h3>
+      </div>
+        <div class="w3-container">
+          <input class="w3-check" type="checkbox" id="checkboxLink" checked="checked"/>
+          <label>Include the link</label>
+          <input class="w3-check" type="checkbox" id="checkboxName"/>
+          <label>Annotator's name</label>
+
+        </div>
+
+
+      </form>
+      <div class="w3-container">
+        <button class="w3-button w3-teal" id="btn-export">Start exporting</button>
+
+      </div>
+
+
+
+
+
+
+      <div id="exportDiv">
+
+      </div>
+    </main>
+  </body>
 </htm>
