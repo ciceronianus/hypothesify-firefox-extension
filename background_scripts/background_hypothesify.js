@@ -62,8 +62,25 @@ async function getAnnotations(givenUrl) {
   let url = removeHypothesisUrl(givenUrl); 
   
   /*Now I can create a query for "api.hypothes.is" and fetch it. */
+  
+  let APIkey = await browser.storage.sync.get("APIkey").then((result) => {return result["APIkey"]});
+  let USERid = await browser.storage.sync.get("USERid").then((result) => {return result["USERid"]});;
+
+  console.log(APIkey);
+  console.log(USERid);
+  
+
   let query = "https://api.hypothes.is/api/search?url=" + url;
-  const fetchResult = fetch(query);
+  
+  
+  
+  
+  const fetchResult = fetch(query,  {
+    method: "GET",
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      'Authorization': `Bearer  ${APIkey}` }
+    });
   const response = await fetchResult;
   const jsonData = await response.json();
   

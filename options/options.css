@@ -1,0 +1,23 @@
+.flex-container {
+
+  display: flex;
+  flex-direction: row;
+  
+}
+
+
+table {
+  width: 300px;
+  border: 1px solid #ccc;
+}
+
+tr td:first-child {
+  width: 150px;
+
+}
+
+tr td:last-child {
+  width: 10px;
+}
+
+

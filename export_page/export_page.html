@@ -7,42 +7,48 @@
     <link rel="stylesheet" href="w3.css" />
   </head>
 
-  <body>
+  <body class="w3-light-gray">
     <!-- https://www.w3schools.com/w3css/w3css_input.asp-->
-    <main class="w3-container">
+    <!-- Header contains exporting options etc. -->
+    <header class="w3-container">
+      
       <div class="w3-container w3-light-gray">
         <h1><img src="logo-hypothesis.png" height="40px"/> Hypothes.is - export</h1>
       </div>
+      <div class="w3-container">
       <div class="w3-container w3-blue">
         <h2>Account information </h2>
       </div>
       <form class="w3-container">
-        <label for="inpUSERid">USER id</label> <br />
-        <input class="w3-input w3-border" id="inpUSERid" type="text" /> 
-
-
-        <label for="inpAPIkey">API Key</label> <br />
-        <input class="w3-input w3-border" id="inpAPIkey" type="text" />
-        <!----
-  <select id="sorting">
-    <option value="time">Time</option>
-    <option value="place">Place</option>
-  </select>
-  <br />
-
--->
+        <p>        <label for="USERid"><b>USER id</b></label> 
+        <input class="w3-input w3-border" id="USERid" type="text" /> 
+      </p>
+  
+        <p>
+          <label for="APIkey"><b>API Key</b></label> 
+        <input class="w3-input w3-border" id="APIkey" type="text" />
+      </p>
+      <p>
+        To save your account information permanently, open the <button id="btn-settings">settings</button> of the extension.
+        </p>
+      <!-- <button class="button w3-button w3-blue w3-hover-pale-green" id="btn-save">Save account information</button>  -->
+        
       </form>
-
+      
+      </div>
+      <div class="w3-container">
       <div class="w3-container w3-green">
         <h2>Metadata</h2>
       </div>
       <form class="w3-container">
-        <label for="inpTitle">Title:</label> <br />
-        <input class="w3-input w3-border" id="inpTitle" type="text" /> <br />
-
-
-        <label for="inpUrl">URL:</label> <br />
-        <input class="w3-input w3-border" id="inpUrl" type="text" /> <br />
+        <p>
+        <label for="inpTitle"><b>Title</b></label>
+        <input class="w3-input w3-border" id="inpTitle" type="text" /> 
+      </p>  
+      <p>
+        <label for="inpUrl"><b>URL</b></label> 
+        <input class="w3-input w3-border" id="inpUrl" type="text" /> 
+      </p>
         <!----
   <select id="sorting">
     <option value="time">Time</option>
@@ -52,44 +58,98 @@
 
 -->
       </form>
+    </div>
+<div class="w3-container">
+      <div class="w3-container w3-red">
+        <h2>Important</h2>
+      </div>
+      <div class="w3-container">
+        <p>In the current version of Hypothesify, if the user name is filled, only annotations pertaining to this user will be downloaded.</p>
+        <p>
+          For a comprehensive tool to download annotations from Hypothes.is, check the <a href="http://jonudell.net/h/facet.html?facet=user&search=judell&token=">work of J. Udell.</a>
+
+        </p>
+      </div>
+     
+    </div> 
+
+    <!-- <div class="w3-container">
       <div class="w3-container w3-red">
         <h2>Export options</h2>
       </div>
       <form class="w3-container">
         <div class="w3-container">        
+          <input class="w3-check" type="checkbox" id="privateAnn"></input>
+          <label for="privateAnn">Download only user's annotations</label> 
           <input class="w3-radio" name="exportSelection" type="radio" id="privateAnn" value="private" checked="checked"/>
         <label for="pubAnn-none" checked>Only users's annotations</label>
 
 
         <input class="w3-radio" name="exportSelection" type="radio" id="pubAnn" value="public"/>
-        <label for="pubAnn-all">Also public annotations</label>
+        <label for="pubAnn-all">Also public annotations</label> 
       </div>
-      <div class="w3-container">
-        <h3>Customization (options will be remembered)</h3>
-      </div>
-        <div class="w3-container">
+      
+     <div class="w3-container">
+          <p>
           <input class="w3-check" type="checkbox" id="checkboxLink" checked="checked"/>
           <label>Include the link</label>
-          <input class="w3-check" type="checkbox" id="checkboxName"/>
+        </p>
+        <p>          <input class="w3-check" type="checkbox" id="checkboxName"/>
           <label>Annotator's name</label>
+        </p>
+
 
         </div>
 
 
       </form>
+     
+    </div> -->
+
+
+
+    <!-- Export itself -->
+    <div class="w3-class">
       <div class="w3-container">
         <button class="w3-button w3-teal" id="btn-export">Start exporting</button>
 
       </div>
 
+    </div>
+
+   
 
 
-
-
-
-      <div id="exportDiv">
-
-      </div>
+      
+    </header>
+    <main>
+    <div id="exportDiv">
+    </div>
     </main>
+ 
+
+
+    <footer>
+      <!-- modals - hidden at the beginning -->
+      <!-- <div id="modalDataSave" class="w3-modal">
+        <div class="w3-modal-content">
+          <div class="w3-container">
+            <span id="modalDataSaveClose" class="w3-button w3-display-topright">&times;</span>
+            <p>Your user data was saved</p>
+          
+          </div>
+        </div>
+      </div>
+    
+      <div id="modalDataDelete" class="w3-modal">
+        <div class="w3-modal-content">
+          <div class="w3-container">
+            <span id="modalDataDeleteClose" class="w3-button w3-display-topright">&times;</span>
+            <p>Your user data was deleted</p>
+          
+          </div>
+        </div>
+      </div> -->
+    </footer>
   </body>
 </htm>

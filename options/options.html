@@ -9,8 +9,38 @@
 
   <body>
 <!-- https://via.hypothes.is/https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Implement_a_settings_page -->
-<h2>Menu items</h2>
+<main class="w3-container">
+  <form class="w3-container">
+    <h2>🔎 Privacy</h2>
+    If checked, the extension will search for annotations. If you add your user account for Hypothes.is, it will also check for your private annotations.
     <table>
+      <tr>
+      
+        <td>Search for annotations</td><td><input class="checkbox" type="checkbox" id="btn-annotations" ></td> 
+        
+      </tr>
+      <!-- <tr>
+      
+        <td>
+
+          &emsp; Only public annotations</td><td><input class="checkbox" type="checkbox" id="btn-annotations-public" ></td>
+      
+        
+      </tr>
+      <tr>
+
+        <td>
+
+          &emsp; Also private annotations</td><td><input class="checkbox" type="checkbox" id="btn-annotations-private" ></td>  
+      </tr> -->
+    </table>
+    
+    </form> 
+  
+  <form class="w3-container">
+<h2>🍔 Menu items</h2>
+
+    <table id="menuItems">
       <tr>
         <td>Create a link</td><td><input class="checkbox" type="checkbox" id="btn-link" ></td> 
       </tr>
@@ -34,26 +64,58 @@
       </tr>
 
     </table>
-       
-    <h2><img src="logo-hypothesis.png" height="30px"/> Hyptothes.is account</h2>
-    <table>
-      <!-- <tr>
-        <td>Check for private annotations</td><td><input class="checkbox" type="checkbox" id="" disabled></td> 
-      </tr> -->
-      <tr>
-        <td>User</td><td><input class="textInput" type="type" id="USERid" ></td> 
-      </tr>
-      <tr>
-        <td>API Key</td><td><input class="textInput" type="type" id="APIkey" ></td> 
-      </tr>
-    </table>
-    <button class="btn-save" id="btn-save">Save account</button>
-    <button class="btn-delete" id="btn-delete">Delete account </button>
+  </form>   
+   
+    
+    
+    <form class="w3-container">
+      <h2><img src="logo-hypothesis.png" height="30px"/> Hyptothes.is account</h2>
+      <label class="w3-text"><b>User</b></label>
+      <input class="w3-input w3-border" type="text" id="USERid">
+      
+      <label class="w3-text"><b>API Key</b></label>
+      <input class="w3-input w3-border" type="text" id="APIkey">
+      <br/>
+      
+      </form> 
+      <div class="w3-container">
+      <button class="button w3-button w3-black w3-hover-pale-green" id="btn-save">Save account</button> 
+      <button class="button w3-button w3-black w3-hover-pale-red" id="btn-delete">Delete account </button>
+    </div>
 
-    <p></p>
+    <div class="w3-container">
+      <h2>🎁 Support for Hypothesify</h2>
+      <p>If you wish to support this extension, you can make a <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6AMGMUDRX29XU&source=url">PayPal donation</a>. 🤸‍♂️</p>
 
-    <script src="options.js"></script>
+
+    </div>
+     
+   
+  </main>
+
+  <footer>
+    
+    <div id="modalDataSave" class="w3-modal">
+      <div class="w3-modal-content">
+        <div class="w3-container">
+          <span id="modalDataSaveClose" class="w3-button w3-display-topright">&times;</span>
+          <p>Your user data was saved</p>
+        
+        </div>
+      </div>
+    </div>
+  
+    <div id="modalDataDelete" class="w3-modal">
+      <div class="w3-modal-content">
+        <div class="w3-container">
+          <span id="modalDataDeleteClose" class="w3-button w3-display-topright">&times;</span>
+          <p>Your user data was deleted</p>
+        
+        </div>
+      </div>
+    </div>
+  </footer>
 
   </body>
-
+  <script src="options.js"></script>
 </html>
