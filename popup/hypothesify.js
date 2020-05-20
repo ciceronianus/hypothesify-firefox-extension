@@ -10,7 +10,7 @@ PART 1 - core functions fulfilling the following actions:
 - creating <iframe>  
 - creating <a href> 
 - creating Markdown code
-- creating :hiccup code (for Roam)  
+- creating code for Roam   
 
 When the user clicks on a button, the intermediate function "getCurrenUrlCrosroad" is called. This function serves as a crossroad: 1) it obtains the current url of the active tab, 2) it gets the id of the button that was pressed and calls the appropriate function (creating <iframe>, creating <a href> etc.). 
 
@@ -104,22 +104,43 @@ function createIframeResults(tabs) {
 function createHiccupResults(tabs) {
   let tab = tabs[0];
   let currentUrl = removeHypothesisUrl(tab.url);
-  let generatedCode = ':hiccup[:iframe {:width "100%",  :height "500", :src "' + 'https://via.hypothes.is/' + currentUrl + '"}]';
+  let generatedCode;
+  if (currentUrl.endsWith(".pdf")) {
+
+    generatedCode = `{{pdf: https://via.hypothes.is/${currentUrl}}}`
+    }
+    else {
+      generatedCode = `{{iframe: https://via.hypothes.is/${currentUrl}}}`
+
+    }
+  // let generatedCode = ':hiccup[:iframe {:width "100%",  :height "500", :src "' + 'https://via.hypothes.is/' + currentUrl + '"}]';
 
   document.getElementById("generatedCodeField").value = generatedCode;
 
 
 }
 
-function createPdfResults(tabs) {
-  let tab = tabs[0];
-  let currentUrl = removeHypothesisUrl(tab.url);
-  let generatedCode = '{{pdf: https://via.hypothes.is/' + currentUrl + '}}';
+// function createRoamResults(tabs) {
+//   let tab = tabs[0];
+//   let currentUrl = removeHypothesisUrl(tab.url);
+//   let generatedCode = '{{:hiccup[:iframe {:width "100%",  :height "500", :src "' + 'https://via.hypothes.is/}}' + currentUrl + '"}]';
 
-  document.getElementById("generatedCodeField").value = generatedCode;
+//   document.getElementById("generatedCodeField").value = generatedCode;
 
 
-}
+// }
+
+
+
+// function createPdfResults(tabs) {
+//   let tab = tabs[0];
+//   let currentUrl = removeHypothesisUrl(tab.url);
+//   let generatedCode = '{{pdf: https://via.hypothes.is/' + currentUrl + '}}';
+
+//   document.getElementById("generatedCodeField").value = generatedCode;
+
+
+// }
 
 /* Gets the url and redirects to other functions */
 async function getCurrentUrlCrossroad(){
@@ -153,9 +174,9 @@ async function getCurrentUrlCrossroad(){
     case "btn-hiccup":
           createHiccupResults(tabs);
           break;
-    case "btn-pdf":
-      createPdfResults(tabs);
-      break;
+    // case "btn-pdf":
+    //   createPdfResults(tabs);
+    //   break;
     default:
       // code block
   } 
@@ -209,21 +230,26 @@ function onError(error) {
 /* This script decides whether an element should be shown or not */
 document.querySelectorAll('li.btn').forEach(item => {
   // console.log(item.id);
+  
   browser.storage.sync.get(item.id).then((result) => {
     if (result[item.id] == false) {
       item.style.display = "none";
+      
 
     } else {
       item.style.display = "";
+      
 
     } 
-    
+ 
   
   });
- 
+  
+  
 
 
 });
+
 
 
 
@@ -239,7 +265,7 @@ document.getElementById("btn-iframe").addEventListener("click", getCurrentUrlCro
 
 document.getElementById("btn-hiccup").addEventListener("click", getCurrentUrlCrossroad);
 
-document.getElementById("btn-pdf").addEventListener("click", getCurrentUrlCrossroad);
+// document.getElementById("btn-pdf").addEventListener("click", getCurrentUrlCrossroad);
 
 
 document.getElementById("generatedCodeField").addEventListener("click", selectAllText);

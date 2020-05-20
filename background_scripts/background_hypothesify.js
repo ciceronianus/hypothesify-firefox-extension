@@ -64,7 +64,7 @@ async function getAnnotations(givenUrl) {
   /*Now I can create a query for "api.hypothes.is" and fetch it. */
   
   let APIkey = await browser.storage.sync.get("APIkey").then((result) => {return result["APIkey"]});
-  let USERid = await browser.storage.sync.get("USERid").then((result) => {return result["USERid"]});;
+  let USERid = await browser.storage.sync.get("USERid").then((result) => {return result["USERid"]});
 
   console.log(APIkey);
   console.log(USERid);

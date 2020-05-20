@@ -21,7 +21,7 @@ function onError(error) {
 document.querySelectorAll('#menuItems .checkbox').forEach(item => {
   console.log(item);
   browser.storage.sync.get(item.id).then((result) => {item.checked = result[item.id] || true; 
-  // console.log("Results" + result);
+  console.log("Item.id" + item.id);
   });
   
   // console.log(item.id);
